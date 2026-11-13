@@ -34,6 +34,9 @@ def get_max_and_min(numbers:list)->tuple[float, float]:
 def calculate_variance(numbers:list)->float:
     # TODO - Complete the function to return the variance of the numbers in the list
     
+    if len(numbers) <= 1:
+        return 0.0
+
     mean = sum(numbers)/len(numbers)
     
     deviation = []
@@ -47,13 +50,16 @@ def calculate_variance(numbers:list)->float:
         square_deviation_value = math.pow(n, 2)
         square_deviation.append(square_deviation_value)
         
-    mean_of_square_deviation = sum(square_deviation)/len(square_deviation)
+    mean_of_square_deviation = sum(square_deviation)/(len(square_deviation) -1)
         
     return mean_of_square_deviation
 
 def calculate_std_dev(numbers:list)->float:
     # TODO - Complete the function to return the standard deviation of the numbers in the list
     
+    if len(numbers) <= 1:
+            return 0.0
+
     mean = sum(numbers)/len(numbers)
     
     deviation = []
@@ -67,7 +73,7 @@ def calculate_std_dev(numbers:list)->float:
         square_deviation_value = math.pow(n, 2)
         square_deviation.append(square_deviation_value)
         
-    mean_of_square_deviation = sum(square_deviation)/len(square_deviation)
+    mean_of_square_deviation = sum(square_deviation)/(len(square_deviation) -1)
     
     standard_deviation = float(math.sqrt(mean_of_square_deviation))
         
