@@ -6,14 +6,25 @@ def load_data(filepath:str, column:int)->tuple[list, int]:
     # The function returns a tuple that contains the list of values and the total number 
     # of values in the column
     
-    values_of_data_list = []
+    numbers = []
+    line_number = 0
     
-    with open (filepath, "r") as file:
+    with open(filepath, "r") as file:
         for line in file:
-            columns = line.strip().split(",")
-            values_of_data_list.append(columns[column])
+            line_number += 1
+
+            columns = line.strip().split("\t")
+
+            try:
+                value = float(columns[column])
+                numbers.append(value)
+            except ValueError:
+                continue
+            except IndexError:
+                print(f"Exiting the program! There was no valid list index in column {column} in line {line_number} in file: {filepath}")
+                sys.exit()
         
-    return values_of_data_list, len(values_of_data_list)
+    return numbers, len(numbers)
 
 def calculate_average(numbers:list)->float:
     # TODO - Complete the function to return the average of the list of numbers
@@ -27,6 +38,9 @@ def get_max_and_min(numbers:list)->tuple[float, float]:
     # TODO - Complete the function to return a tuple with the maximum and minimum
     # values in the list, in that order
     
+    if len(numbers) == 0:
+        return 0.0, 0.0
+
     maximum = float(max(numbers))
     minimum = float(min(numbers))
     return maximum, minimum
@@ -58,7 +72,7 @@ def calculate_std_dev(numbers:list)->float:
     # TODO - Complete the function to return the standard deviation of the numbers in the list
     
     if len(numbers) <= 1:
-            return 0.0
+        return 0.0
 
     mean = sum(numbers)/len(numbers)
     
@@ -79,20 +93,22 @@ def calculate_std_dev(numbers:list)->float:
         
     return standard_deviation
 
-def calculate_median(number:list)->float:
+def calculate_median(numbers:list)->float:
     # TODO - Complete the function to return the median of the numbers in the list
-    number.sort()
-    n = len(number)
+    
+    if len(numbers) == 0:
+        return 0.0
+    
+    numbers.sort()
+    n = len(numbers)
     
     if n % 2 == 1:
         middle = n//2
-        median = number[middle]
+        median = numbers[middle]
         
     else:
         middle_1 = (n//2) - 1
         middle_2 = n//2
-        median = (number[middle_1] + number[middle_2])/2
+        median = (numbers[middle_1] + numbers[middle_2])/2
         
     return float(median)
-
-
