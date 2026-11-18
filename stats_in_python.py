@@ -17,14 +17,22 @@ def load_data(filepath:str, column:int)->tuple[list, int]:
 
             try:
                 value = float(columns[column])
+
+                if math.isnan(value):
+                    continue
+
                 numbers.append(value)
             except ValueError:
                 continue
             except IndexError:
-                print(f"Exiting the program! There was no valid list index in column {column} in line {line_number} in file: {filepath}")
+                print(f"Exiting the program! There is no valid 'list index' in column {column} in line {line_number} in file: {filepath}")
                 sys.exit()
+
+    if len(numbers) == 0:
+        print(f"Error: There were no valid number(s) in column {column} in file: {filepath}")
+        sys.exit()
         
-    return numbers, len(numbers)
+    return numbers, line_number
 
 def calculate_average(numbers:list)->float:
     # TODO - Complete the function to return the average of the list of numbers
